@@ -1,27 +1,29 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export default function Resume() {
-    useEffect(() => {
-        // Try to get geolocation (optional, not always available)
-        const pingVisit = (location?: string) => {
-            fetch('/api/ping', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ location }),
-            });
-        };
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    const { latitude, longitude } = pos.coords;
-                    pingVisit(`${latitude},${longitude}`);
-                },
-                () => pingVisit()
-            );
-        } else {
-            pingVisit();
-        }
-    }, []);
+const HomePage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const source = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
+    const pingVisit = (location?: string) => {
+      fetch('/api/ping', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ location, source }),
+      });
+    };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          pingVisit(`${latitude},${longitude}`);
+        },
+        () => pingVisit()
+      );
+    } else {
+      pingVisit();
+    }
+  }, []);
 
     return (
         <iframe
@@ -32,4 +34,6 @@ export default function Resume() {
             title="Resume"
         />
     );
-}
+};
+
+export default HomePage;

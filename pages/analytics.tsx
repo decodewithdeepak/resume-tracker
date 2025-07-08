@@ -69,7 +69,7 @@ export default function Analytics({ authed, logs }: AnalyticsProps) {
 
     return (
         <div className="min-h-screen bg-gray-50 py-10 px-2">
-            <div className="max-w-4xl mx-auto bg-white rounded shadow p-6">
+            <div className="max-w-7xl mx-auto bg-white rounded shadow p-6">
                 <h2 className="text-2xl font-bold mb-2 text-blue-700">Visit Analytics</h2>
                 <p className="mb-4 text-gray-700">Total visits: <span className="font-semibold">{total}</span></p>
                 <h3 className="text-lg font-semibold mb-1">By Browser:</h3>
@@ -87,6 +87,7 @@ export default function Analytics({ authed, logs }: AnalyticsProps) {
                                 <th className="px-3 py-2 border-b">IP</th>
                                 <th className="px-3 py-2 border-b">Browser</th>
                                 <th className="px-3 py-2 border-b">User Agent</th>
+                                <th className="px-3 py-2 border-b">Source</th>
                                 <th className="px-3 py-2 border-b">Location</th>
                             </tr>
                         </thead>
@@ -97,6 +98,7 @@ export default function Analytics({ authed, logs }: AnalyticsProps) {
                                     <td className="px-3 py-2 border-b">{log.ip}</td>
                                     <td className="px-3 py-2 border-b">{log.browser}</td>
                                     <td className="px-3 py-2 border-b break-all">{log.userAgent}</td>
+                                    <td className="px-3 py-2 border-b">{log.source || '-'}</td>
                                     <td className="px-3 py-2 border-b">{log.location || '-'}</td>
                                 </tr>
                             ))}

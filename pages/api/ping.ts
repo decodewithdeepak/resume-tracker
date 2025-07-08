@@ -18,14 +18,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const parser = new UAParser.UAParser(userAgent);
   const browser = parser.getBrowser().name || 'Unknown';
 
-  // Optionally, get location from request body (client-side geolocation)
-  const { location } = req.body;
+
+  // Get location and source from request body
+  const { location, source } = req.body;
 
   await VisitLog.create({
     ip,
     userAgent,
     browser,
     location,
+    source,
   });
 
   res.status(201).json({ message: 'Visit logged' });
