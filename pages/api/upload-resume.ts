@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Run multer middleware
     await runMiddleware(req, res, upload.single('resume'));
 
-    const file = (req as any).file as Express.Multer.File | undefined;
+    const file = (req as unknown as { file?: Express.Multer.File }).file;
 
     if (!file) {
       return res.status(400).json({ error: 'No file uploaded' });
