@@ -2,28 +2,15 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const HomePage = () => {
-  const router = useRouter();
-  useEffect(() => {
-    const source = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
-    const pingVisit = (location?: string) => {
-      fetch('/api/ping', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ location, source }),
-      });
-    };
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          pingVisit(`${latitude},${longitude}`);
-        },
-        () => pingVisit()
-      );
-    } else {
-      pingVisit();
-    }
-  }, []);
+    const router = useRouter();
+    useEffect(() => {
+        const source = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
+        fetch('/api/ping', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ source }),
+        });
+    }, []);
 
     return (
         <iframe

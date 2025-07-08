@@ -6,7 +6,7 @@ export interface IVisitLog extends Document {
     userAgent: string;
     browser: string;
     source: string;
-    location?: string;
+    sourceVisitCount: number;
 }
 
 const VisitLogSchema = new Schema<IVisitLog>({
@@ -15,7 +15,7 @@ const VisitLogSchema = new Schema<IVisitLog>({
     userAgent: { type: String, required: true },
     browser: { type: String, required: true },
     source: { type: String },
-    location: { type: String },
+    sourceVisitCount: { type: Number },
 });
 
 export default models.VisitLog || mongoose.model<IVisitLog>('VisitLog', VisitLogSchema);

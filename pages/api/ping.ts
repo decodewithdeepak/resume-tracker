@@ -19,14 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const browser = parser.getBrowser().name || 'Unknown';
 
 
-  // Get location and source from request body
-  const { location, source } = req.body;
+
+  // Get source from request body
+  const { source } = req.body;
 
   await VisitLog.create({
     ip,
     userAgent,
     browser,
-    location,
     source,
   });
 
