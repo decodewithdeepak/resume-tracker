@@ -138,14 +138,14 @@ export default function Visits({ authed, logs }: VisitsProps) {
                     ))}
                 </ul>
 
-                <h2 className="text-lg font-semibold mb-2">Raw Visit Logs:</h2>
+                <h2 className="text-lg font-semibold mb-2">Visit Logs:</h2>
                 <div className="overflow-x-auto">
                     <table className="min-w-full border text-sm">
                         <thead className="bg-gray-100">
                             <tr>
                                 <th className="border px-2 py-1">Time</th>
-                                <th className="border px-2 py-1">IP</th>
-                                <th className="border px-2 py-1">User Agent</th>
+                                <th className="border px-2 py-1 hidden sm:table-cell">IP</th>
+                                <th className="border px-2 py-1 hidden sm:table-cell">User Agent</th>
                                 <th className="border px-2 py-1">Source</th>
                                 <th className="border px-2 py-1">Visit Count</th>
                             </tr>
@@ -154,8 +154,8 @@ export default function Visits({ authed, logs }: VisitsProps) {
                             {logs.map((log) => (
                                 <tr key={log._id} className="even:bg-gray-50">
                                     <td className="border px-2 py-1">{new Date(log.timestamp).toLocaleString()}</td>
-                                    <td className="border px-2 py-1">{log.ip}</td>
-                                    <td className="border px-2 py-1 break-all">{log.userAgent}</td>
+                                    <td className="border px-2 py-1 hidden sm:table-cell">{log.ip}</td>
+                                    <td className="border px-2 py-1 break-all hidden sm:table-cell">{log.userAgent}</td>
                                     <td className="border px-2 py-1">{log.source || '-'}</td>
                                     <td className="border px-2 py-1">{log.source ? sourceCounts[log.source] : 1}</td>
                                 </tr>
