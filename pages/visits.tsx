@@ -96,20 +96,20 @@ export default function Visits({ authed, logs }: VisitsProps) {
                         <thead className="bg-gray-100">
                             <tr>
                                 <th className="px-3 py-2 border-b">Time</th>
-                                <th className="px-3 py-2 border-b">IP</th>
-                                <th className="px-3 py-2 border-b">Browser</th>
-                                <th className="px-3 py-2 border-b">User Agent</th>
+                                <th className="px-3 py-2 border-b hidden sm:table-cell">IP</th>
+                                <th className="px-3 py-2 border-b hidden sm:table-cell">Browser</th>
+                                <th className="px-3 py-2 border-b hidden sm:table-cell">User Agent</th>
                                 <th className="px-3 py-2 border-b">Source</th>
-                                <th className="px-3 py-2 border-b">Source Visit Count</th>
+                                <th className="px-3 py-2 border-b">Count</th>
                             </tr>
                         </thead>
                         <tbody>
                             {logs.map((log: any) => (
                                 <tr key={log._id} className="even:bg-gray-50">
                                     <td className="px-3 py-2 border-b">{new Date(log.timestamp).toLocaleString()}</td>
-                                    <td className="px-3 py-2 border-b">{log.ip}</td>
-                                    <td className="px-3 py-2 border-b">{log.browser}</td>
-                                    <td className="px-3 py-2 border-b break-all">{log.userAgent}</td>
+                                    <td className="px-3 py-2 border-b hidden sm:table-cell">{log.ip}</td>
+                                    <td className="px-3 py-2 border-b hidden sm:table-cell">{log.browser}</td>
+                                    <td className="px-3 py-2 border-b break-all hidden sm:table-cell">{log.userAgent}</td>
                                     <td className="px-3 py-2 border-b">{log.source || '-'}</td>
                                     <td className="px-3 py-2 border-b">{sourceCounts[log.source] || 1}</td>
                                 </tr>
