@@ -1,10 +1,11 @@
-# Resume Tracker
+
+# Resume Tracker - Version Control for Your Resume
 
 A simple, privacy-friendly Next.js app to track who views your online resume. Perfect for job seekers who want to know when and where their resume is being viewed—especially by recruiters or companies you reach out to.
 
 ## Features
 
-- **Embedded Resume:** Shows your hosted resume (PDF or Google Doc) in a clean, distraction-free view.
+- **Embedded Resume:** Displays your resume as a PDF at the main page (`/`).
 - **Visit Logging:** Every visit is logged to MongoDB (via Mongoose), capturing:
   - Timestamp
   - IP address
@@ -13,9 +14,11 @@ A simple, privacy-friendly Next.js app to track who views your online resume. Pe
 - **Personalized Links:** Add `?source=companyname` to your resume URL when sharing. See exactly which company viewed your resume.
 - **Analytics Dashboard:**
   - Password-protected `/visits` route
-  - View all logs, visit counts by source, and basic browser stats
+  - View all logs, visit counts by source, and browser stats
   - Mobile-friendly: Only the most important columns (time, source, count) are shown on small screens
+- **Admin Resume Upload:** Upload a new PDF resume from the `/visits` dashboard. The new file instantly replaces the old one on the main page.
 - **No Tracking Scripts:** All analytics are server-side—no third-party trackers, no cookies for visitors.
+
 
 ## Quick Start
 
@@ -32,26 +35,28 @@ A simple, privacy-friendly Next.js app to track who views your online resume. Pe
      MONGODB_URI=your_mongodb_connection_string
      ADMIN_PASSWORD=your_admin_password
      ```
-3. **Run the development server:**
+3. **Add your resume:**
+   - Place your initial `resume.pdf` in the `public` folder. (Full path: `public/resume.pdf`)
+   - Or, upload a new PDF from the `/visits` admin dashboard after starting the app.
+4. **Run the development server:**
    ```bash
    npm run dev
    ```
    Open [http://localhost:3000](http://localhost:3000) to view your resume.
-
-4. **Share your resume:**
+5. **Share your resume:**
    - Use links like `https://yourdomain.com/?source=google` or `?source=microsoft` when reaching out to recruiters.
+6. **View analytics and upload new resume:**
+   - Go to `/visits` and log in with your admin password to see all visit logs, stats, and upload a new PDF resume.
 
-5. **View analytics:**
-   - Go to `/visits` and log in with your admin password to see all visit logs and stats.
 
 ## Customization
-- **Change the embedded resume:** Edit `pages/index.tsx` and update the `iframe` source.
+- **Change the embedded resume:** Upload a new PDF from the `/visits` dashboard, or replace `public/resume.pdf` manually.
 - **Change admin password:** Update `ADMIN_PASSWORD` in `.env.local`.
 - **Deploy:** Deploy to Vercel or your favorite host. Set your environment variables in the dashboard.
 
 ## Why use this?
 - Know when your resume is being viewed (and by whom)
-- Get feedback on which companies are interested
+- Like a Version Control for your resume
 - No privacy-invasive tracking for your visitors
 
 ---
