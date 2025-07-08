@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { GetServerSideProps, NextPageContext } from 'next';
+import type { GetServerSideProps } from 'next';
 import dbConnect from '../lib/dbConnect';
 import VisitLog from '../models/VisitLog';
 

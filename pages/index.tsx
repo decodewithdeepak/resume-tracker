@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 const HomePage = () => {
-    const router = useRouter();
     useEffect(() => {
         const source = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
         fetch('/api/ping', {
