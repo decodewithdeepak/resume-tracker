@@ -11,8 +11,10 @@ let isConnected = false;
 export default async function dbConnect() {
   if (isConnected) return;
 
-  const db = await mongoose.connect(MONGODB_URI);
+  await mongoose.connect(MONGODB_URI);
   isConnected = true;
 
-  console.log('✅ MongoDB connected');
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('✅ MongoDB connected');
+  }
 }
