@@ -4,17 +4,16 @@ import fs from 'fs';
 import path from 'path';
 import type { Request, Response } from 'express';
 
-// Multer config: Store file in memory
+// Setup multer to store file in memory
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Disable Next.js's default body parsing (so multer can parse the stream)
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-// Helper to wrap Express middleware for Next.js
+// Helper to run Express-style middleware in Next.js API route
 function runMiddleware(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -34,7 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Run multer middleware
     await runMiddleware(req, res, upload.single('resume'));
 
     const file = (req as unknown as { file?: Express.Multer.File }).file;
@@ -57,8 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     fs.writeFileSync(resumePath, file.buffer);
 
     return res.status(200).json({ message: 'Resume uploaded successfully' });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return res.status(500).json({ error: `Upload error: ${message}` });
+  } catch {
+    return res.status(500).json({ error: 'Unexpected server error' });
   }
 }
