@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { v2 as cloudinary } from 'cloudinary';
 import { IncomingForm } from 'formidable';
+import type { File as FormidableFile } from 'formidable';
 
 // Disable body parser for file upload
 export const config = {
@@ -20,16 +21,20 @@ cloudinary.config({
 // Test Cloudinary connection on every API call
 cloudinary.api.ping()
     .then((result) => {
-        // eslint-disable-next-line no-console
-        console.log('Cloudinary connection successful:', result);
+        if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.log('Cloudinary connection successful:', result);
+        }
     })
     .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log('Cloudinary connection failed:', err.message);
+        if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.log('Cloudinary connection failed:', err.message);
+        }
     });
 
 // Parse form using formidable
-const parseForm = (req: NextApiRequest): Promise<{ file: any }> => {
+const parseForm = (req: NextApiRequest): Promise<{ file: FormidableFile }> => {
     return new Promise((resolve, reject) => {
         const form = new IncomingForm({ keepExtensions: true });
         form.parse(req, (err, fields, files) => {
@@ -54,7 +59,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
 
         return res.status(200).json({ message: 'Resume uploaded', url: result.secure_url });
-    } catch (err: any) {
-        return res.status(500).json({ error: err.message || 'Upload failed' });
+    } catch (err) {
+        const message = err instanceof Error ? err.message : 'Upload failed';
+        return res.status(500).json({ error: message });
     }
 }
