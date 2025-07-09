@@ -103,7 +103,7 @@ export default function Visits({ authed, logs }: VisitsProps) {
             } else {
                 setUploadMsg(data.error?.message || 'Upload failed.');
             }
-        } catch (err: any) {
+        } catch {
             setUploadMsg('Upload failed. Try again.');
         }
 
