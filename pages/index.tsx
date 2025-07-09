@@ -20,16 +20,12 @@ const HomePage = () => {
     }, []);
 
     return (
-        resumeUrl ? (
-            <iframe
-                id="resume-frame"
-                src={resumeUrl}
-                width="100%"
-                height="1000px"
-            />
-        ) : (
-            <div className="text-center py-20 text-gray-500">No resume uploaded yet.</div>
-        )
+        <iframe
+            id="resume-frame"
+            src={resumeUrl || ''}
+            width="100%"
+            height="1000px"
+        />
     );
 };
 
