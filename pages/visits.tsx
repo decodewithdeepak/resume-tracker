@@ -81,7 +81,7 @@ export default function Visits({ authed, logs }: VisitsProps) {
         formData.append('resume', file);
 
         try {
-            const res = await fetch('/api/upload-resume', { method: 'POST', body: formData });
+            const res = await fetch('/api/update-resume', { method: 'POST', body: formData });
             const data = await res.json();
             setUploadMsg(data.message || data.error || 'Upload response received.');
         } catch {

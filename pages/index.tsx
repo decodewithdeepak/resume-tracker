@@ -12,11 +12,9 @@ const HomePage = () => {
 
     return (
         <iframe
-            src="/resume.pdf"
+            src="https://res.cloudinary.com/ddotbkkt7/image/upload/resume.pdf"
             width="100%"
             height="1000px"
-            style={{ border: 0 }}
-            title="Resume"
         />
     );
 };
