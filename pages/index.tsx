@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const HomePage = () => {
     useEffect(() => {
@@ -10,12 +10,26 @@ const HomePage = () => {
         });
     }, []);
 
+    const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetch('/api/resume-url')
+            .then((res) => res.json())
+            .then((data) => setResumeUrl(data.url))
+            .catch(() => setResumeUrl(null));
+    }, []);
+
     return (
-        <iframe
-            src="https://res.cloudinary.com/ddotbkkt7/image/upload/resume.pdf"
-            width="100%"
-            height="1000px"
-        />
+        resumeUrl ? (
+            <iframe
+                id="resume-frame"
+                src={resumeUrl}
+                width="100%"
+                height="1000px"
+            />
+        ) : (
+            <div className="text-center py-20 text-gray-500">No resume uploaded yet.</div>
+        )
     );
 };
 

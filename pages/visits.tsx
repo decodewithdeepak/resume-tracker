@@ -61,7 +61,6 @@ export default function Visits({ authed, logs }: VisitsProps) {
         if (l.source) acc[l.source] = (acc[l.source] || 0) + 1;
         return acc;
     }, {});
-
     const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setUploadMsg(null);
@@ -78,19 +77,38 @@ export default function Visits({ authed, logs }: VisitsProps) {
         }
 
         const formData = new FormData();
-        formData.append('resume', file);
+        formData.append('file', file);
+        formData.append('upload_preset', 'resume_preset'); // <-- set this in Cloudinary
+        // Do NOT set public_id for unsigned uploads (Cloudinary will generate a unique one)
 
         try {
-            const res = await fetch('/api/update-resume', { method: 'POST', body: formData });
+            const res = await fetch('https://api.cloudinary.com/v1_1/ddotbkkt7/auto/upload', {
+                method: 'POST',
+                body: formData,
+            });
             const data = await res.json();
-            setUploadMsg(data.message || data.error || 'Upload response received.');
-        } catch {
+            if (data.secure_url) {
+                // Save the new URL to MongoDB
+                await fetch('/api/resume-url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: data.secure_url }),
+                });
+                // Show the new PDF immediately after upload by updating the iframe (if present)
+                const resumeFrame = document.getElementById('resume-frame') as HTMLIFrameElement | null;
+                if (resumeFrame) {
+                    resumeFrame.src = data.secure_url + '?t=' + Date.now();
+                }
+                setUploadMsg('Resume uploaded! New URL: ' + data.secure_url);
+            } else {
+                setUploadMsg(data.error?.message || 'Upload failed.');
+            }
+        } catch (err: any) {
             setUploadMsg('Upload failed. Try again.');
         }
 
         setUploading(false);
     };
-
     if (!authed) {
         return (
             <form method="post" className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -108,7 +126,6 @@ export default function Visits({ authed, logs }: VisitsProps) {
             </form>
         );
     }
-
     return (
         <div className="min-h-screen bg-gray-50 py-10 px-4">
             <div className="max-w-7xl mx-auto bg-white p-6 rounded shadow">
