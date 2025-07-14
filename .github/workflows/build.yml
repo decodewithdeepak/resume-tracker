@@ -3,6 +3,8 @@ name: Auto Build Resume PDF
 on:
   push:
     branches: [main]
+    paths:
+      - '**.tex'
 
 permissions:
   contents: write
