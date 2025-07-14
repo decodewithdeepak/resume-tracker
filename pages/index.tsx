@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const RESUME_PDF_URL = '/Resume.pdf'; // resume is under public folder
 
 const HomePage = () => {
+    useEffect(() => {
+        // Get source from query string
+        const params = new URLSearchParams(window.location.search);
+        const source = params.get('source');
+        fetch('/api/ping', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ source }),
+        });
+    }, []);
     return (
         <div className="relative">
             <iframe
