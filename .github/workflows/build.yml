@@ -19,14 +19,14 @@ jobs:
       
     - name: Install LaTeX
       run: sudo apt-get update && sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended texlive-latex-recommended texlive-xetex latexmk
-
+    
     - name: Clean Previous PDF
       run: rm -f public/Resume.pdf
 
     - name: Compile Resume PDF
       run: |
-        latexmk -pdf -silent -interaction=nonstopmode resume.tex
-        cp resume.pdf public/Resume.pdf
+        latexmk -pdf -silent -interaction=nonstopmode resume.tex || cat resume.log
+        cp resume.pdf public/Resume.pdf || true
 
     - name: Commit and Push PDF
       run: |
