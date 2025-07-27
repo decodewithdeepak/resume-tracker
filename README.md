@@ -1,4 +1,5 @@
 # Resume Tracker - Version Control + Tracking
+
 A simple, privacy-friendly Next.js app to host your resume as a PDF with basic visit tracking (IP, browser, source) and a clean analytics dashboard. It uses LaTeX for creating a version-controlled, professional resume, automatically built via GitHub Actions and served through Vercel. Ideal for job seekers who want to track when and where their resume is viewed, especially by recruiters.
 
 ## Features
@@ -11,6 +12,7 @@ A simple, privacy-friendly Next.js app to host your resume as a PDF with basic v
 - **No Tracking Scripts:** All analytics are server-side.
 
 ## Tech Stack
+
 - **Frontend:** Next.js, Tailwind CSS
 - **Backend:** Next.js API routes
 - **Database:** MongoDB
@@ -27,7 +29,7 @@ A simple, privacy-friendly Next.js app to host your resume as a PDF with basic v
    npm install
    ```
 2. Add MongoDB connection & admin password to `.env.local`.
-3. Edit `resume.tex` to update your resume content.
+3. Edit `public/resume.tex` to update your resume content.
 4. Run locally:
    ```bash
    npm run dev
