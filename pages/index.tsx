@@ -4,9 +4,13 @@ const RESUME_PDF_URL = '/Resume.pdf'; // resume is under public folder
 
 const HomePage = () => {
     useEffect(() => {
-        // Get source from query string
+        // Get source from query string, or log the whole query if no source param
         const params = new URLSearchParams(window.location.search);
-        const source = params.get('source');
+        let source = params.get('source');
+        if (!source && window.location.search.startsWith('?')) {
+            // Remove the leading '?', log the rest
+            source = window.location.search.substring(1);
+        }
         fetch('/api/ping', {
             method: 'POST',
             headers: {
