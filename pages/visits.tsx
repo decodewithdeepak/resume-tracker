@@ -19,9 +19,13 @@ interface VisitsProps {
     logs: VisitLogType[];
 }
 
-export const getServerSideProps: GetServerSideProps<VisitsProps> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<VisitsProps & { page: number; totalPages: number }> = async (context) => {
+    const { req, res, query } = context;
     let authed = false;
     let logs: VisitLogType[] = [];
+    const pageSize = 20;
+    const page = parseInt((query.page as string) || '1', 10);
+    let totalPages = 1;
 
     if (req.headers.cookie?.includes('tracking_auth=1')) authed = true;
 
@@ -38,14 +42,25 @@ export const getServerSideProps: GetServerSideProps<VisitsProps> = async ({ req,
 
     if (authed) {
         await dbConnect();
-        const rawLogs = await VisitLogModel.find({}).sort({ timestamp: -1 }).lean();
+        const totalLogs = await VisitLogModel.countDocuments();
+        totalPages = Math.max(1, Math.ceil(totalLogs / pageSize));
+        const rawLogs = await VisitLogModel.find({})
+            .sort({ timestamp: -1 })
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .lean();
         logs = JSON.parse(JSON.stringify(rawLogs));
     }
 
-    return { props: { authed, logs } };
+    return { props: { authed, logs, page, totalPages } };
 };
 
-export default function Visits({ authed, logs }: VisitsProps) {
+interface VisitsPageProps extends VisitsProps {
+    page: number;
+    totalPages: number;
+}
+
+export default function Visits({ authed, logs, page = 1, totalPages = 1 }: VisitsPageProps) {
     const [pw, setPw] = useState('');
     const total = logs.length;
 
@@ -58,6 +73,11 @@ export default function Visits({ authed, logs }: VisitsProps) {
         if (l.source) acc[l.source] = (acc[l.source] || 0) + 1;
         return acc;
     }, {});
+
+    const handlePageChange = (newPage: number) => {
+        if (newPage < 1 || newPage > totalPages) return;
+        window.location.href = `/visits?page=${newPage}`;
+    };
 
     if (!authed) {
         return (
@@ -86,8 +106,7 @@ export default function Visits({ authed, logs }: VisitsProps) {
         <div className="min-h-screen bg-gray-50 py-10 px-4">
             <div className="max-w-6xl mx-auto bg-white p-6 rounded shadow-md">
                 <h1 className="text-2xl font-bold mb-4 text-blue-700">Visit Analytics</h1>
-                <p className="mb-4">Total Visits: <strong>{total}</strong></p>
-
+                <p className="mb-4">Page <strong>{page}</strong> of <strong>{totalPages}</strong></p>
                 <h2 className="text-lg font-semibold mb-2">Browser Stats:</h2>
                 <div className="flex flex-wrap gap-2 mb-4">
                     {Object.entries(byBrowser).map(([browser, count]) => (
@@ -130,6 +149,23 @@ export default function Visits({ authed, logs }: VisitsProps) {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                <div className="flex justify-center items-center gap-4 mt-6">
+                    <button
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page <= 1}
+                        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                    >
+                        Previous
+                    </button>
+                    <span>Page {page} of {totalPages}</span>
+                    <button
+                        onClick={() => handlePageChange(page + 1)}
+                        disabled={page >= totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </div>
