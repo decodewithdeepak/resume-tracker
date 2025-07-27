@@ -133,8 +133,9 @@ export default function Visits({ authed, logs, page = 1, totalPages = 1 }: Visit
                                 <th className="border px-2 py-1">Time</th>
                                 <th className="border px-2 py-1 hidden sm:table-cell">IP</th>
                                 <th className="border px-2 py-1 hidden sm:table-cell">User Agent</th>
+                                <th className="border px-2 py-1 hidden sm:table-cell">Browser</th>
                                 <th className="border px-2 py-1">Source</th>
-                                <th className="border px-2 py-1">Visit Count</th>
+                                {/* <th className="border px-2 py-1">Visit Count</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -143,8 +144,9 @@ export default function Visits({ authed, logs, page = 1, totalPages = 1 }: Visit
                                     <td className="border px-2 py-1">{new Date(log.timestamp).toLocaleString()}</td>
                                     <td className="border px-2 py-1 hidden sm:table-cell">{log.ip}</td>
                                     <td className="border px-2 py-1 break-all hidden sm:table-cell">{log.userAgent}</td>
+                                    <td className="border px-2 py-1 hidden sm:table-cell">{log.browser || '-'}</td>
                                     <td className="border px-2 py-1">{log.source || '-'}</td>
-                                    <td className="border px-2 py-1">{log.source ? sourceCounts[log.source] : 1}</td>
+                                    {/* <td className="border px-2 py-1">{log.source ? sourceCounts[log.source] : 1}</td> */}
                                 </tr>
                             ))}
                         </tbody>
