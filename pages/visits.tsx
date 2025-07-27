@@ -62,7 +62,6 @@ interface VisitsPageProps extends VisitsProps {
 
 export default function Visits({ authed, logs, page = 1, totalPages = 1 }: VisitsPageProps) {
     const [pw, setPw] = useState('');
-    const total = logs.length;
 
     const byBrowser = logs.reduce<Record<string, number>>((acc, l) => {
         acc[l.browser] = (acc[l.browser] || 0) + 1;
