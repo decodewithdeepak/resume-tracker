@@ -1,40 +1,55 @@
-# Resume Tracker - Version Control + Tracking
+# Resume Tracker
 
-A simple, privacy-friendly Next.js app to host your resume as a PDF with basic visit tracking (IP, browser, source) and a clean analytics dashboard. It uses LaTeX for creating a version-controlled, professional resume, automatically built via GitHub Actions and served through Vercel. Ideal for job seekers who want to track when and where their resume is viewed, especially by recruiters.
+A privacy-friendly Next.js app to host your resume as a PDF with visit tracking and analytics. Uses LaTeX for version-controlled resumes, auto-built via GitHub Actions.
 
 ## Features
 
-- **PDF Resume:** Embedded at `/`.
-- **Visit Logging:** Logs time, IP, user agent, and source to MongoDB.
-- **Custom Share Links:** Use `?source=company` to track viewers.
-- **Analytics Dashboard:** Password-protected `/visits` route with visit stats.
-- **Easy Updates:** Edit `resume.tex`, push to GitHub, PDF auto-deployed.
-- **No Tracking Scripts:** All analytics are server-side.
+- **PDF Resume:** Embedded at `/` with download option
+- **Visit Tracking:** Logs IP, browser, timestamp, and custom sources
+- **Custom Links:** Use `?source=linkedin` or `?source=company-name` to track viewers
+- **Analytics Dashboard:** Password-protected `/visits` with visit stats and filtering
+- **Auto PDF Updates:** Edit `resume.tex`, push to GitHub → CI/CD pipeline auto-builds PDF
+- **Privacy-First:** No client-side tracking scripts
 
 ## Tech Stack
 
-- **Frontend:** Next.js, Tailwind CSS
-- **Backend:** Next.js API routes
-- **Database:** MongoDB
-- **PDF Generation:** LaTeX
-- **Deployment:** Vercel (for Next.js), GitHub Actions (for PDF updates)
-- **Version Control:** Git
+Next.js • MongoDB • Tailwind CSS • TypeScript • LaTeX • GitHub Actions • Vercel
 
-## Quick Start
+## Setup
 
-1. Clone repo & install dependencies:
+1. **Clone & Install:**
+
    ```bash
    git clone https://github.com/decodewithdeepak/resume-tracker.git
    cd resume-tracker
    npm install
    ```
-2. Add MongoDB connection & admin password to `.env.local`.
-3. Edit `public/resume.tex` to update your resume content.
-4. Run locally:
+
+2. **Environment Variables:**
+   Create `.env.local` (see `.env.example`):
+
+   ```bash
+   MONGODB_URI=your_mongodb_connection_string
+   ADMIN_PASSWORD=your_dashboard_password
+   ```
+
+3. **Update Resume:**
+   Edit `public/resume.tex` with your content (LaTeX format)
+
+4. **Run Locally:**
+
    ```bash
    npm run dev
    ```
-5. Deploy to Vercel or your preferred hosting provider.
+
+5. **Deploy:**
+   Deploy to Vercel, add environment variables to dashboard
+
+## Usage
+
+- **Resume:** `https://resume.deepakmodi.tech/`
+- **Track Sources:** `https://resume.deepakmodi.tech/?gh-repo`
+- **Analytics:** `https://resume.deepakmodi.tech/visits` (requires password)
 
 ---
 
