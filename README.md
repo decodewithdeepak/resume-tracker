@@ -1,6 +1,6 @@
-# Resume Tracker
+# Resume Tracker - Versioning + Tracking
 
-A privacy-friendly Next.js app to host your resume as a PDF with visit tracking and analytics. Uses LaTeX for version-controlled resumes, auto-built via GitHub Actions.
+A simple Next.js application that hosts your resume as an embedded PDF with visit tracking and analytics. Features a complete CI/CD pipeline using LaTeX for version-controlled resume generation, automatically compiled and deployed via GitHub Actions whenever you update your resume content.
 
 ## Features
 
@@ -8,7 +8,7 @@ A privacy-friendly Next.js app to host your resume as a PDF with visit tracking 
 - **Visit Tracking:** Logs IP, browser, timestamp, and custom sources
 - **Custom Links:** Use `?source=linkedin` or `?source=company-name` to track viewers
 - **Analytics Dashboard:** Password-protected `/visits` with visit stats and filtering
-- **Auto PDF Updates:** Edit `resume.tex`, push to GitHub → CI/CD pipeline auto-builds PDF
+- **Auto PDF Updates:** Edit `resume.tex`, push to GitHub → GitHub Actions auto-builds PDF
 - **Privacy-First:** No client-side tracking scripts
 
 ## Tech Stack
