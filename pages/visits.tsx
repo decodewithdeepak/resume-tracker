@@ -140,7 +140,16 @@ export default function Visits({ authed, logs, page = 1, totalPages = 1 }: Visit
                             {logs.map((log) => (
                                 <tr key={log._id} className="even:bg-gray-50">
                                     <td className="border px-2 py-1">{new Date(log.timestamp).toLocaleString()}</td>
-                                    <td className="border px-2 py-1 hidden sm:table-cell">{log.ip}</td>
+                                    <td className="border px-2 py-1 hidden sm:table-cell">
+                                        <a 
+                                            href={`https://ipapi.co/${log.ip}/`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-black hover:text-blue-600 underline"
+                                        >
+                                            {log.ip}
+                                        </a>
+                                    </td>
                                     <td className="border px-2 py-1 break-all hidden sm:table-cell">{log.userAgent}</td>
                                     <td className="border px-2 py-1">{log.browser || '-'}</td>
                                     <td className="border px-2 py-1">{log.source || '-'}</td>
