@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const RESUME_PDF_URL = '/Resume.pdf'; // resume is under public folder
+const RESUME_PDF_URL = '/Deepak_Modi_Resume.pdf'; // resume is under public folder
 
 const HomePage = () => {
     useEffect(() => {
