@@ -29,8 +29,6 @@ const HomePage = () => {
             <a
                 href={RESUME_PDF_URL}
                 download="Deepak_Modi_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition hover:bg-blue-700"
                 title="Download Resume PDF"
             >
